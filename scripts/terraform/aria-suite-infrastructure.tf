@@ -139,21 +139,22 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-data "vsphere_content_library" "library" {
-  name = "Aria-Suite-Library"
-}
+# Content library data sources (commented for demo)
+# data "vsphere_content_library" "library" {
+#   name = "Aria-Suite-Library"
+# }
 
-data "vsphere_content_library_item" "aria_operations_ova" {
-  name       = "VMware-vRealize-Operations-Manager-Appliance"
-  type       = "ovf"
-  library_id = data.vsphere_content_library.library.id
-}
+# data "vsphere_content_library_item" "aria_operations_ova" {
+#   name       = "VMware-vRealize-Operations-Manager-Appliance"
+#   type       = "ovf"
+#   library_id = data.vsphere_content_library.library.id
+# }
 
-data "vsphere_content_library_item" "aria_automation_ova" {
-  name       = "VMware-vRealize-Automation-Appliance"
-  type       = "ovf"
-  library_id = data.vsphere_content_library.library.id
-}
+# data "vsphere_content_library_item" "aria_automation_ova" {
+#   name       = "VMware-vRealize-Automation-Appliance"
+#   type       = "ovf"
+#   library_id = data.vsphere_content_library.library.id
+# }
 
 # Random password generation
 resource "random_password" "aria_admin_password" {
@@ -231,9 +232,9 @@ resource "vsphere_virtual_machine" "aria_operations" {
     unit_number      = 1
   }
 
-  clone {
-    template_uuid = data.vsphere_content_library_item.aria_operations_ova.id
-  }
+  # clone {
+  #   template_uuid = data.vsphere_content_library_item.aria_operations_ova.id
+  # }
 
   vapp {
     properties = {
@@ -290,9 +291,9 @@ resource "vsphere_virtual_machine" "aria_automation" {
     eagerly_scrub    = false
   }
 
-  clone {
-    template_uuid = data.vsphere_content_library_item.aria_automation_ova.id
-  }
+  # clone {
+  #   template_uuid = data.vsphere_content_library_item.aria_automation_ova.id
+  # }
 
   vapp {
     properties = {
