@@ -158,8 +158,10 @@ class DatabaseManager:
             cursor = conn.execute(query, params)
             return [dict(row) for row in cursor.fetchall()]
 
-    def store_alert(self, rule_name: str, endpoint: str, metric_name: str,
-                   value: float, threshold: float, severity: str, message: str):
+    def store_alert(
+        self, rule_name: str, endpoint: str, metric_name: str,
+        value: float, threshold: float, severity: str, message: str
+    ):
         """Store an alert"""
         with sqlite3.connect(self.db_path) as conn:
             conn.execute("""
@@ -228,12 +230,18 @@ class AriaHealthCollector:
             cluster_url = f"{endpoint.url}/suite-api/api/resources"
             params = {'resourceKind': 'ClusterComputeResource', 'pageSize': 100}
 
-            async with self.session.get(cluster_url, headers=headers, params=params) as response:
+            async with self.session.get(
+                cluster_url, headers=headers, params=params
+            ) as response:
                 if response.status == 200:
                     data = await response.json()
-                    await self.process_operations_resources(endpoint, data.get('resourceList', []))
+                    await self.process_operations_resources(
+                        endpoint, data.get('resourceList', [])
+                    )
                 else:
-                    logger.warning(f"Failed to collect from {endpoint.name}: {response.status}")
+                    logger.warning(
+                        f"Failed to collect from {endpoint.name}: {response.status}"
+                    )
 
         except Exception as e:
             logger.error(f"Error collecting from {endpoint.name}: {e}")
@@ -252,20 +260,26 @@ class AriaHealthCollector:
                     data = await response.json()
                     return data.get('token')
                 else:
-                    logger.error(f"Authentication failed for {endpoint.name}: {response.status}")
+                    logger.error(
+                        f"Authentication failed for {endpoint.name}: {response.status}"
+                    )
                     return None
 
         except Exception as e:
             logger.error(f"Authentication error for {endpoint.name}: {e}")
             return None
 
-    async def process_operations_resources(self, endpoint: AriaEndpoint, resources: List[Dict]):
+    async def process_operations_resources(
+        self, endpoint: AriaEndpoint, resources: List[Dict]
+    ):
         """Process Aria Operations resources and extract metrics"""
         for resource in resources:
             resource_id = resource.get('identifier')
-            resource_name = resource.get('resourceKey', {}).get('name', 'Unknown')
+            resource_name = resource.get('resourceKey', {}).get(
+                'name', 'Unknown'
+            )
 
-            # Simulate health metrics (in real implementation, fetch actual metrics)
+            # Simulate health metrics (in real implementation, fetch actual)
             metrics = [
                 HealthMetric(
                     endpoint=endpoint.name,
@@ -315,7 +329,9 @@ class AriaHealthCollector:
                 self.db_manager.store_metric(metric)
 
         except Exception as e:
-            logger.error(f"Error collecting automation metrics from {endpoint.name}: {e}")
+            logger.error(
+                f"Error collecting automation metrics from {endpoint.name}: {e}"
+            )
 
     async def collect_network_insight_metrics(self, endpoint: AriaEndpoint):
         """Collect Aria Network Insight specific metrics"""
@@ -344,7 +360,9 @@ class AriaHealthCollector:
                 self.db_manager.store_metric(metric)
 
         except Exception as e:
-            logger.error(f"Error collecting network insight metrics from {endpoint.name}: {e}")
+            logger.error(
+                f"Error collecting network insight metrics from {endpoint.name}: {e}"
+            )
 
     def stop_collection(self):
         """Stop metrics collection"""
@@ -354,7 +372,9 @@ class AriaHealthCollector:
 class AlertManager:
     """Alert management and notification system"""
 
-    def __init__(self, db_manager: DatabaseManager, alert_rules: List[AlertRule]):
+    def __init__(
+        self, db_manager: DatabaseManager, alert_rules: List[AlertRule]
+    ):
         self.db_manager = db_manager
         self.alert_rules = alert_rules
         self.email_config = self.load_email_config()
