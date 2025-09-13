@@ -1,5 +1,10 @@
 # 🎓 VMware Aria Suite Lifecycle 8 — Install, Configure & Manage
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%20%7C%207%2B-blue)](https://github.com/PowerShell/PowerShell)
+[![VMware](https://img.shields.io/badge/VMware-Aria_Suite-orange)](https://www.vmware.com/products/aria.html)
+[![CI](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions/workflows/ci.yml/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions/workflows/ci.yml)
+
 > 👤 **Author:** LT - [GitHub Profile](https://github.com/uldyssian-sh) • 📄 **License:** MIT • 🗓️ **Duration:** 2 days  
 > 🎯 **Audience:** Experienced System Administrators & System Engineers
 
