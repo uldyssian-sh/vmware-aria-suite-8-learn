@@ -72,7 +72,7 @@ class TestAriaOperationsAPI:
             mock_get.side_effect = requests.exceptions.Timeout()
             
             with pytest.raises(requests.exceptions.Timeout):
-                mock_get.side_effect()
+                mock_get()
 
 
 if __name__ == '__main__':
