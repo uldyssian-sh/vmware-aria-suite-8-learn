@@ -598,6 +598,7 @@ class DashboardGenerator:
         # This would query alerts from database
         st.info("No recent alerts - system operating normally")
 
+
 def main():
     """Main application entry point"""
     # Configuration
