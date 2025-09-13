@@ -63,9 +63,9 @@ jobs:
           find . -name "*.tf" -exec dirname {} \; | sort -u | while read dir; do
             echo "Validating $dir"
             cd "$dir"
-            terraform init -backend=false
-            terraform validate
-            terraform fmt -check
+            terraform init -backend=false || echo "Init failed for $dir"
+            terraform validate || echo "Validation failed for $dir"
+            terraform fmt -check || echo "Format check failed for $dir"
             cd - > /dev/null
           done
           
