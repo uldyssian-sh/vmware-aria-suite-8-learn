@@ -1,0 +1,240 @@
+name: Multi-Platform CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop, feature/*]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
+  TERRAFORM_VERSION: '1.6.0'
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        check-type: [python, powershell, terraform, markdown, yaml]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        if: matrix.check-type == 'python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Python Quality Checks
+        if: matrix.check-type == 'python'
+        run: |
+          pip install flake8 black pylint bandit safety
+          find . -name "*.py" | xargs flake8 --max-line-length=88
+          find . -name "*.py" | xargs black --check
+          find . -name "*.py" | xargs pylint --disable=all --enable=E,W
+          bandit -r . -f json -o bandit-report.json || true
+          safety check --json --output safety-report.json || true
+          
+      - name: PowerShell Quality Checks
+        if: matrix.check-type == 'powershell'
+        shell: pwsh
+        run: |
+          Install-Module -Name PSScriptAnalyzer -Force -SkipPublisherCheck
+          $results = Invoke-ScriptAnalyzer -Path . -Recurse -ReportSummary
+          if ($results | Where-Object Severity -eq 'Error') {
+            $results | Format-Table
+            throw "PSScriptAnalyzer found errors"
+          }
+          
+      - name: Terraform Quality Checks
+        if: matrix.check-type == 'terraform'
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          
+      - name: Terraform Validation
+        if: matrix.check-type == 'terraform'
+        run: |
+          find . -name "*.tf" -exec dirname {} \; | sort -u | while read dir; do
+            echo "Validating $dir"
+            cd "$dir"
+            terraform init -backend=false
+            terraform validate
+            terraform fmt -check
+            cd - > /dev/null
+          done
+          
+      - name: Markdown Quality Checks
+        if: matrix.check-type == 'markdown'
+        run: |
+          npm install -g markdownlint-cli markdown-link-check
+          markdownlint . --config .markdownlint.json || true
+          find . -name "*.md" | xargs markdown-link-check --config .markdown-link-check.json || true
+          
+      - name: YAML Quality Checks
+        if: matrix.check-type == 'yaml'
+        run: |
+          pip install yamllint
+          yamllint . -c .yamllint.yml || true
+
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python, javascript
+          
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+        
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  test-suite:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        test-type: [unit, integration, api]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-cov requests pyvmomi
+          
+      - name: Run Unit Tests
+        if: matrix.test-type == 'unit'
+        run: |
+          pytest tests/unit/ -v --cov=. --cov-report=xml
+          
+      - name: Run Integration Tests
+        if: matrix.test-type == 'integration'
+        run: |
+          pytest tests/integration/ -v --tb=short
+          
+      - name: Run API Tests
+        if: matrix.test-type == 'api'
+        run: |
+          pytest tests/api/ -v --tb=short
+          
+      - name: Upload coverage reports
+        if: matrix.test-type == 'unit'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+
+  build-artifacts:
+    runs-on: ubuntu-latest
+    needs: [code-quality, test-suite]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: Build Documentation
+        run: |
+          npm install -g @marp-team/marp-cli gitbook-cli
+          mkdir -p build/docs
+          cp -r docs/* build/docs/
+          cp -r modules build/docs/
+          cp README.md build/docs/
+          
+      - name: Package Training Materials
+        run: |
+          mkdir -p build/packages
+          tar -czf build/packages/aria-suite-training-$(date +%Y%m%d).tar.gz \
+            modules/ labs/ examples/ scripts/ docs/
+            
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-materials-${{ github.sha }}
+          path: build/
+          retention-days: 30
+
+  performance-benchmark:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Install benchmark tools
+        run: |
+          pip install pytest-benchmark locust
+          
+      - name: Run Performance Tests
+        run: |
+          pytest tests/performance/ --benchmark-json=benchmark.json
+          
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark.json
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [build-artifacts, performance-benchmark]
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Staging
+        run: |
+          echo "Deploying to staging environment..."
+          # Simulate deployment process
+          sleep 5
+          echo "Staging deployment completed"
+          
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [build-artifacts, performance-benchmark]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production environment..."
+          # Simulate production deployment
+          sleep 10
+          echo "Production deployment completed"
