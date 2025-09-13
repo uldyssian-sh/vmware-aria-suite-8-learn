@@ -539,7 +539,7 @@ class DashboardGenerator:
         # Group by endpoint
         df = pd.DataFrame(metrics)
         endpoint_health = df.groupby('endpoint')['status'].apply(
-            lambda x: 'healthy' if all(s == 'healthy' for s in x) else 
+            lambda x: 'healthy' if all(s == 'healthy' for s in x) else
                      'critical' if any(s == 'critical' for s in x) else 'warning'
         ).reset_index()
 
@@ -547,11 +547,13 @@ class DashboardGenerator:
         for _, row in endpoint_health.iterrows():
             status_color = {
                 'healthy': '🟢',
-                'warning': '🟡', 
+                'warning': '🟡',
                 'critical': '🔴'
             }
 
-            st.write(f"{status_color[row['status']]} **{row['endpoint']}** - {row['status'].title()}")
+            st.write(
+                f"{status_color[row['status']]} **{row['endpoint']}** - {row['status'].title()}"
+            )
 
     def render_performance_charts(self, hours_back: int):
         """Render performance charts"""
