@@ -1,6 +1,6 @@
 # 🎓 VMware Aria Suite Lifecycle 8 — Install, Configure & Manage
 
-> 👤 **Author:** LT • 📄 **License:** MIT • 🗓️ **Duration:** 2 days  
+> 👤 **Author:** LT - [GitHub Profile](https://github.com/uldyssian-sh) • 📄 **License:** MIT • 🗓️ **Duration:** 2 days  
 > 🎯 **Audience:** Experienced System Administrators & System Engineers
 
 ---
