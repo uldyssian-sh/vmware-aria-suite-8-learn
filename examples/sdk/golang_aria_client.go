@@ -213,7 +213,10 @@ func validateURL(rawURL string) error {
 // NewAriaClient creates a new Aria client
 func NewAriaClient(baseURL, username, password string, skipSSLVerify bool) *AriaClient {
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: skipSSLVerify},
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: skipSSLVerify,
+			MinVersion:         tls.VersionTLS13,
+		},
 	}
 	
 	client := &http.Client{

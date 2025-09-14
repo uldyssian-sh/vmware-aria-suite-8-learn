@@ -207,12 +207,14 @@ class AriaOperationsClient {
 // Example usage
 async function demonstrateAriaOperationsAPI() {
     const config = {
-        hostname: 'aria-ops.lab.local',
-        port: 443,
-        verifySSL: false,
+        hostname: process.env.ARIA_HOSTNAME || 'aria-ops.lab.local',
+        port: process.env.ARIA_PORT || 443,
+        verifySSL: process.env.NODE_ENV === 'production',
         credentials: {
-            username: 'admin',
-            password: 'VMware123!'
+            username: process.env.ARIA_USERNAME || 'admin',
+            password: process.env.ARIA_PASSWORD || (() => {
+                throw new Error('ARIA_PASSWORD environment variable must be set');
+            })()
         }
     };
     

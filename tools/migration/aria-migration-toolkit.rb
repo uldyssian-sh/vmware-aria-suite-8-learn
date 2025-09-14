@@ -261,7 +261,7 @@ class AriaMigrationToolkit
       if response.code == '201'
         @logger.info("Imported dashboard: #{CGI.escapeHTML(dashboard['name'].to_s)}")
       else
-        @logger.warn("Failed to import dashboard #{CGI.escapeHTML(dashboard['name'].to_s)}: #{response.code}")
+        @logger.warn("Failed to import dashboard #{CGI.escapeHTML(dashboard['name'].to_s)}: #{CGI.escapeHTML(response.code.to_s)}")
       end
     end
   end
@@ -442,7 +442,7 @@ def main
     puts "Migration completed successfully!"
     
   rescue => e
-    puts "Migration failed: #{CGI.escapeHTML(e.message)}"
+    puts "Migration failed: #{CGI.escapeHTML(e.message.to_s)}"
     exit 1
   end
 end

@@ -24,7 +24,8 @@ class AriaOperationsAPI:
     def authenticate(self):
         """Authenticate with Aria Operations"""
         logger.info("Authenticating...")
-        self.auth_token = "mock-token"
+        # Use secure token generation in production
+        self.auth_token = "mock-token"  # TODO: Replace with actual authentication
         return True
     
     def get_resources(self, resource_kind=None):

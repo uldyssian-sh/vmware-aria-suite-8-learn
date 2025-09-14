@@ -49,9 +49,9 @@ services:
     image: postgres:15-alpine
     container_name: aria-postgres
     environment:
-      POSTGRES_DB: aria_dev
-      POSTGRES_USER: aria_user
-      POSTGRES_PASSWORD: aria_password
+      POSTGRES_DB: ${POSTGRES_DB:-aria_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-aria_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -151,7 +151,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-changeme}
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - grafana_data:/var/lib/grafana
@@ -171,8 +171,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      - MINIO_ROOT_USER=minioadmin
-      - MINIO_ROOT_PASSWORD=minioadmin123
+      - MINIO_ROOT_USER=${MINIO_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD:-changeme}
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
@@ -219,9 +219,9 @@ services:
       - "4000:4000"
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgresql://aria_user:aria_password@postgres:5432/aria_dev
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-aria_user}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-aria_dev}
       - REDIS_URL=redis://redis:6379
-      - JWT_SECRET=your-jwt-secret-key
+      - JWT_SECRET=${JWT_SECRET:-changeme}
     volumes:
       - ./api-server:/app
       - /app/node_modules
