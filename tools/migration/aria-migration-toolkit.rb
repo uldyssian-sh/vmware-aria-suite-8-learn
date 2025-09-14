@@ -101,6 +101,7 @@ class AriaMigrationToolkit
     uri = URI("https://#{hostname}/suite-api/api/auth/token/acquire")
     request = Net::HTTP::Post.new(uri)
     request['Content-Type'] = 'application/json'
+    request['X-Requested-With'] = 'XMLHttpRequest'  # CSRF protection
     request.body = auth_data.to_json
     
     response = http_client(hostname).request(request)

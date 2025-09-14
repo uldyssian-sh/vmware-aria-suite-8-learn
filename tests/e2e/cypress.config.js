@@ -47,45 +47,62 @@ module.exports = defineConfig({
           return null
         },
         
-        // Custom task for API calls
+        // Custom task for API calls with URL validation
         makeApiCall({ method, url, headers, body }) {
           const https = require('https')
           const { URL } = require('url')
           
           return new Promise((resolve, reject) => {
-            const parsedUrl = new URL(url)
-            const options = {
-              hostname: parsedUrl.hostname,
-              port: parsedUrl.port || 443,
-              path: parsedUrl.pathname + parsedUrl.search,
-              method: method,
-              headers: headers || {},
-              rejectUnauthorized: process.env.NODE_ENV === 'development' ? false : true
-            }
+            try {
+              const parsedUrl = new URL(url)
+              
+              // Validate URL to prevent SSRF
+              const allowedHosts = [
+                'aria-ops.lab.local',
+                'aria-auto.lab.local',
+                'localhost'
+              ]
+              
+              if (!allowedHosts.includes(parsedUrl.hostname)) {
+                reject(new Error('Unauthorized host'))
+                return
+              }
+              
+              const options = {
+                hostname: parsedUrl.hostname,
+                port: parsedUrl.port || 443,
+                path: parsedUrl.pathname + parsedUrl.search,
+                method: method,
+                headers: headers || {},
+                rejectUnauthorized: process.env.NODE_ENV === 'development' ? false : true
+              }
             
-            const req = https.request(options, (res) => {
-              let data = ''
-              res.on('data', (chunk) => {
-                data += chunk
-              })
-              res.on('end', () => {
-                resolve({
-                  statusCode: res.statusCode,
-                  headers: res.headers,
-                  body: data
+              const req = https.request(options, (res) => {
+                let data = ''
+                res.on('data', (chunk) => {
+                  data += chunk
+                })
+                res.on('end', () => {
+                  resolve({
+                    statusCode: res.statusCode,
+                    headers: res.headers,
+                    body: data
+                  })
                 })
               })
-            })
-            
-            req.on('error', (error) => {
+              
+              req.on('error', (error) => {
+                reject(error)
+              })
+              
+              if (body) {
+                req.write(JSON.stringify(body))
+              }
+              
+              req.end()
+            } catch (error) {
               reject(error)
-            })
-            
-            if (body) {
-              req.write(JSON.stringify(body))
             }
-            
-            req.end()
           })
         },
         
@@ -112,15 +129,37 @@ module.exports = defineConfig({
             })
         },
         
-        // File operations
+        // File operations with path validation
         readFile(filename) {
           const fs = require('fs')
-          return fs.readFileSync(filename, 'utf8')
+          const path = require('path')
+          
+          // Validate and sanitize filename
+          const safePath = path.resolve(path.join('./cypress/fixtures', path.basename(filename)))
+          const fixturesDir = path.resolve('./cypress/fixtures')
+          
+          // Ensure path is within fixtures directory
+          if (!safePath.startsWith(fixturesDir)) {
+            throw new Error('Invalid file path')
+          }
+          
+          return fs.readFileSync(safePath, 'utf8')
         },
         
         writeFile({ filename, content }) {
           const fs = require('fs')
-          fs.writeFileSync(filename, content)
+          const path = require('path')
+          
+          // Validate and sanitize filename
+          const safePath = path.resolve(path.join('./cypress/fixtures', path.basename(filename)))
+          const fixturesDir = path.resolve('./cypress/fixtures')
+          
+          // Ensure path is within fixtures directory
+          if (!safePath.startsWith(fixturesDir)) {
+            throw new Error('Invalid file path')
+          }
+          
+          fs.writeFileSync(safePath, content)
           return null
         }
       })

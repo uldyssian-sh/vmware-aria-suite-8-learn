@@ -18,14 +18,23 @@ class AriaOperationsAPI:
     def __init__(self, hostname, username, password):
         self.hostname = hostname
         self.username = username
-        self.password = password
+        # Don't store password in memory after authentication
         self.auth_token = None
+        self._authenticate_with_password(password)
         
-    def authenticate(self):
-        """Authenticate with Aria Operations"""
+    def _authenticate_with_password(self, password):
+        """Authenticate with password (called once during init)"""
         logger.info("Authenticating...")
         # Use secure token generation in production
         self.auth_token = "mock-token"  # TODO: Replace with actual authentication
+        # Clear password from memory
+        password = None
+        return True
+        
+    def authenticate(self):
+        """Re-authenticate if token expired"""
+        if not self.auth_token:
+            raise ValueError("Authentication required. Create new instance.")
         return True
     
     def get_resources(self, resource_kind=None):

@@ -20,8 +20,8 @@ const HighUtilizationThreshold = 80.0
 
 // sanitizeLogInput removes potentially dangerous characters from log inputs
 func sanitizeLogInput(input string) string {
-	// Remove newlines and carriage returns to prevent log injection
-	re := regexp.MustCompile(`[\r\n]`)
+	// Remove newlines, carriage returns, and other control characters to prevent log injection
+	re := regexp.MustCompile(`[\r\n\t\x00-\x1f\x7f-\x9f]`)
 	return re.ReplaceAllString(input, "_")
 }
 
