@@ -28,6 +28,16 @@ terraform {
   }
 }
 
+# Provider configuration
+provider "vsphere" {
+  server                 = var.vsphere_server
+  user                   = var.vsphere_user
+  password               = var.vsphere_password
+  allow_unverified_ssl   = true
+  api_timeout           = 10
+  persist_session       = true
+}
+
 # Variables
 variable "vsphere_server" {
   description = "vSphere server FQDN or IP"
@@ -200,7 +210,7 @@ resource "vsphere_virtual_machine" "aria_operations" {
   name             = var.aria_operations_config.vm_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = "Aria-Suite"
+  folder           = vsphere_folder.aria_suite.path
 
   num_cpus               = var.aria_operations_config.cpu_count
   memory                 = var.aria_operations_config.memory_mb
@@ -268,7 +278,7 @@ resource "vsphere_virtual_machine" "aria_automation" {
   name             = var.aria_automation_config.vm_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = "Aria-Suite"
+  folder           = vsphere_folder.aria_suite.path
 
   num_cpus               = var.aria_automation_config.cpu_count
   memory                 = var.aria_automation_config.memory_mb

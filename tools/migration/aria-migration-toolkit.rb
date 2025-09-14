@@ -34,10 +34,10 @@ class AriaMigrationToolkit
     config_file ||= 'migration-config.yml'
     
     if File.exist?(config_file)
-      YAML.load_file(config_file)
+      YAML.safe_load_file(config_file, permitted_classes: [Symbol])
     else
       create_default_config(config_file)
-      YAML.load_file(config_file)
+      YAML.safe_load_file(config_file, permitted_classes: [Symbol])
     end
   end
   
@@ -45,26 +45,26 @@ class AriaMigrationToolkit
     default_config = {
       'source' => {
         'aria_operations' => {
-          'hostname' => 'old-aria-ops.lab.local',
-          'username' => 'admin',
-          'password' => 'password123'
+          'hostname' => ENV['SOURCE_ARIA_OPS_HOST'] || 'old-aria-ops.lab.local',
+          'username' => ENV['SOURCE_ARIA_OPS_USER'] || 'admin',
+          'password' => ENV['SOURCE_ARIA_OPS_PASS'] || 'CHANGE_ME'
         },
         'aria_automation' => {
-          'hostname' => 'old-aria-auto.lab.local',
-          'username' => 'configadmin',
-          'password' => 'password123'
+          'hostname' => ENV['SOURCE_ARIA_AUTO_HOST'] || 'old-aria-auto.lab.local',
+          'username' => ENV['SOURCE_ARIA_AUTO_USER'] || 'configadmin',
+          'password' => ENV['SOURCE_ARIA_AUTO_PASS'] || 'CHANGE_ME'
         }
       },
       'target' => {
         'aria_operations' => {
-          'hostname' => 'new-aria-ops.lab.local',
-          'username' => 'admin',
-          'password' => 'newpassword123'
+          'hostname' => ENV['TARGET_ARIA_OPS_HOST'] || 'new-aria-ops.lab.local',
+          'username' => ENV['TARGET_ARIA_OPS_USER'] || 'admin',
+          'password' => ENV['TARGET_ARIA_OPS_PASS'] || 'CHANGE_ME'
         },
         'aria_automation' => {
-          'hostname' => 'new-aria-auto.lab.local',
-          'username' => 'configadmin',
-          'password' => 'newpassword123'
+          'hostname' => ENV['TARGET_ARIA_AUTO_HOST'] || 'new-aria-auto.lab.local',
+          'username' => ENV['TARGET_ARIA_AUTO_USER'] || 'configadmin',
+          'password' => ENV['TARGET_ARIA_AUTO_PASS'] || 'CHANGE_ME'
         }
       },
       'migration' => {
@@ -76,7 +76,7 @@ class AriaMigrationToolkit
     }
     
     File.write(config_file, default_config.to_yaml)
-    @logger.info("Created default configuration: #{config_file}")
+    @logger.info("Created default configuration: #{CGI.escapeHTML(config_file)}")
   end
   
   def http_client(hostname, verify_ssl = false)
