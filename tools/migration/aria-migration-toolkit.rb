@@ -10,6 +10,7 @@ require 'base64'
 require 'logger'
 require 'optparse'
 require 'yaml'
+require 'cgi'
 
 class AriaMigrationToolkit
   VERSION = '2.0.0'
@@ -106,7 +107,7 @@ class AriaMigrationToolkit
     
     if response.code == '200'
       result = JSON.parse(response.body)
-      @logger.info("Authenticated with Aria Operations: #{hostname}")
+      @logger.info("Authenticated with Aria Operations: #{CGI.escapeHTML(hostname)}")
       result['token']
     else
       raise "Authentication failed for #{hostname}: #{response.code}"
@@ -168,9 +169,9 @@ class AriaMigrationToolkit
       response = http_client(hostname).request(request)
       
       if response.code == '201'
-        @logger.info("Imported adapter: #{adapter['resourceKey']['name']}")
+        @logger.info("Imported adapter: #{CGI.escapeHTML(adapter['resourceKey']['name'].to_s)}")
       else
-        @logger.warn("Failed to import adapter #{adapter['resourceKey']['name']}: #{response.code}")
+        @logger.warn("Failed to import adapter #{CGI.escapeHTML(adapter['resourceKey']['name'].to_s)}: #{response.code}")
       end
     end
   end
@@ -213,9 +214,9 @@ class AriaMigrationToolkit
       response = http_client(hostname).request(request)
       
       if response.code == '201'
-        @logger.info("Imported alert definition: #{alert['name']}")
+        @logger.info("Imported alert definition: #{CGI.escapeHTML(alert['name'].to_s)}")
       else
-        @logger.warn("Failed to import alert #{alert['name']}: #{response.code}")
+        @logger.warn("Failed to import alert #{CGI.escapeHTML(alert['name'].to_s)}: #{response.code}")
       end
     end
   end
@@ -258,9 +259,9 @@ class AriaMigrationToolkit
       response = http_client(hostname).request(request)
       
       if response.code == '201'
-        @logger.info("Imported dashboard: #{dashboard['name']}")
+        @logger.info("Imported dashboard: #{CGI.escapeHTML(dashboard['name'].to_s)}")
       else
-        @logger.warn("Failed to import dashboard #{dashboard['name']}: #{response.code}")
+        @logger.warn("Failed to import dashboard #{CGI.escapeHTML(dashboard['name'].to_s)}: #{response.code}")
       end
     end
   end
@@ -315,7 +316,7 @@ class AriaMigrationToolkit
     
     if response.code == '200'
       result = JSON.parse(response.body)
-      @logger.info("Authenticated with Aria Automation: #{hostname}")
+      @logger.info("Authenticated with Aria Automation: #{CGI.escapeHTML(hostname)}")
       result['access_token']
     else
       raise "Authentication failed for #{hostname}: #{response.code}"
@@ -441,7 +442,7 @@ def main
     puts "Migration completed successfully!"
     
   rescue => e
-    puts "Migration failed: #{e.message}"
+    puts "Migration failed: #{CGI.escapeHTML(e.message)}"
     exit 1
   end
 end

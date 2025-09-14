@@ -5,7 +5,8 @@ Simple Aria Operations client
 
 import json
 import logging
-from datetime import datetime
+import os
+from datetime import datetime, timezone
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class AriaOperationsAPI:
         alerts = self.get_alerts()
         
         report = {
-            "generated_at": datetime.now().isoformat(),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
             "total_resources": len(resources),
             "active_alerts": len(alerts),
             "status": "healthy"
@@ -72,7 +73,14 @@ class AriaOperationsAPI:
 
 def main():
     """Example usage"""
-    client = AriaOperationsAPI("aria-ops.lab.local", "admin", "pass")
+    hostname = os.getenv('ARIA_HOSTNAME', 'aria-ops.lab.local')
+    username = os.getenv('ARIA_USERNAME', 'admin')
+    password = os.getenv('ARIA_PASSWORD')
+    
+    if not password:
+        raise ValueError("ARIA_PASSWORD environment variable must be set")
+    
+    client = AriaOperationsAPI(hostname, username, password)
     
     report = client.generate_health_report()
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+const HighUtilizationThreshold = 80.0
+
 // AriaClient represents a client for VMware Aria Suite APIs
 type AriaClient struct {
 	BaseURL    string
@@ -171,6 +173,34 @@ type DeploymentsResponse struct {
 	NumberOfElements int          `json:"numberOfElements"`
 }
 
+// validateURL validates that the URL is safe and allowed
+func validateURL(rawURL string) error {
+	parsedURL, err := url.Parse(rawURL)
+	if err != nil {
+		return fmt.Errorf("invalid URL: %w", err)
+	}
+	
+	// Only allow HTTPS
+	if parsedURL.Scheme != "https" {
+		return fmt.Errorf("only HTTPS URLs are allowed")
+	}
+	
+	// Validate hostname (basic allowlist)
+	allowedHosts := []string{
+		"aria-ops.lab.local",
+		"aria-auto.lab.local",
+		"localhost",
+	}
+	
+	for _, allowed := range allowedHosts {
+		if parsedURL.Hostname() == allowed {
+			return nil
+		}
+	}
+	
+	return fmt.Errorf("hostname not in allowlist: %s", parsedURL.Hostname())
+}
+
 // NewAriaClient creates a new Aria client
 func NewAriaClient(baseURL, username, password string, skipSSLVerify bool) *AriaClient {
 	tr := &http.Transport{
@@ -180,6 +210,11 @@ func NewAriaClient(baseURL, username, password string, skipSSLVerify bool) *Aria
 	client := &http.Client{
 		Transport: tr,
 		Timeout:   30 * time.Second,
+	}
+	
+	// Validate the base URL
+	if err := validateURL(baseURL); err != nil {
+		log.Fatalf("Invalid base URL: %v", err)
 	}
 	
 	return &AriaClient{
@@ -245,8 +280,14 @@ func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.R
 		}
 	}
 	
-	url := c.BaseURL + endpoint
-	req, err := http.NewRequest(method, url, body)
+	fullURL := c.BaseURL + endpoint
+	
+	// Validate the full URL before making request
+	if err := validateURL(fullURL); err != nil {
+		return nil, fmt.Errorf("invalid request URL: %w", err)
+	}
+	
+	req, err := http.NewRequest(method, fullURL, body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -545,7 +586,7 @@ func calculateStats(values []float64) (avg, max float64, over80 int) {
 		if value > max {
 			max = value
 		}
-		if value > 80 {
+		if value > HighUtilizationThreshold {
 			over80++
 		}
 	}
@@ -563,10 +604,10 @@ func (c *AriaClient) generateRecommendations(metrics []MetricData, alerts []Aler
 	highMemCount := 0
 	
 	for _, metric := range metrics {
-		if strings.Contains(metric.MetricKey, "cpu|usage") && metric.Value > 80 {
+		if strings.Contains(metric.MetricKey, "cpu|usage") && metric.Value > HighUtilizationThreshold {
 			highCPUCount++
 		}
-		if strings.Contains(metric.MetricKey, "mem|usage") && metric.Value > 80 {
+		if strings.Contains(metric.MetricKey, "mem|usage") && metric.Value > HighUtilizationThreshold {
 			highMemCount++
 		}
 	}
