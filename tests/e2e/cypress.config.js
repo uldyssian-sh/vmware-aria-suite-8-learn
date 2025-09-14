@@ -30,12 +30,12 @@ module.exports = defineConfig({
     videoCompression: 32,
     screenshotOnRunFailure: true,
     
-    // Environment variables
+    // Environment variables - use process.env for security
     env: {
-      aria_ops_username: 'admin',
-      aria_ops_password: 'VMware123!',
-      aria_auto_username: 'configadmin',
-      aria_auto_password: 'VMware123!',
+      aria_ops_username: process.env.CYPRESS_ARIA_OPS_USERNAME || 'admin',
+      aria_ops_password: process.env.CYPRESS_ARIA_OPS_PASSWORD,
+      aria_auto_username: process.env.CYPRESS_ARIA_AUTO_USERNAME || 'configadmin', 
+      aria_auto_password: process.env.CYPRESS_ARIA_AUTO_PASSWORD,
       test_timeout: 30000
     },
     
@@ -60,7 +60,7 @@ module.exports = defineConfig({
               path: parsedUrl.pathname + parsedUrl.search,
               method: method,
               headers: headers || {},
-              rejectUnauthorized: false // For self-signed certificates
+              rejectUnauthorized: process.env.NODE_ENV === 'development' ? false : true
             }
             
             const req = https.request(options, (res) => {
@@ -93,11 +93,11 @@ module.exports = defineConfig({
         queryDatabase(query) {
           const { Client } = require('pg')
           const client = new Client({
-            host: 'localhost',
-            port: 5432,
-            database: 'aria_dev',
-            user: 'aria_user',
-            password: 'aria_password'
+            host: process.env.DB_HOST || 'localhost',
+            port: process.env.DB_PORT || 5432,
+            database: process.env.DB_NAME || 'aria_dev',
+            user: process.env.DB_USER || 'aria_user',
+            password: process.env.DB_PASSWORD
           })
           
           return client.connect()

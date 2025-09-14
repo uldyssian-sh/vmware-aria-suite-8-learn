@@ -9,12 +9,21 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
 
 const HighUtilizationThreshold = 80.0
+
+// sanitizeLogInput removes potentially dangerous characters from log inputs
+func sanitizeLogInput(input string) string {
+	// Remove newlines and carriage returns to prevent log injection
+	re := regexp.MustCompile(`[\r\n]`)
+	return re.ReplaceAllString(input, "_")
+}
 
 // AriaClient represents a client for VMware Aria Suite APIs
 type AriaClient struct {
@@ -248,7 +257,7 @@ func (c *AriaClient) Authenticate() error {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	
-	c.Logger.Printf("Authenticating with %s", authURL)
+	c.Logger.Printf("Authenticating with %s", sanitizeLogInput(authURL))
 	
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
@@ -333,7 +342,7 @@ func (c *AriaClient) GetResources(resourceKind string, pageSize int) ([]Resource
 		endpoint += "?" + params.Encode()
 	}
 	
-	c.Logger.Printf("Retrieving resources from %s", endpoint)
+	c.Logger.Printf("Retrieving resources from %s", sanitizeLogInput(endpoint))
 	
 	resp, err := c.makeAuthenticatedRequest("GET", endpoint, nil)
 	if err != nil {
@@ -371,7 +380,7 @@ func (c *AriaClient) GetMetrics(resourceID string, metricKeys []string, startTim
 	
 	endpoint += "?" + params.Encode()
 	
-	c.Logger.Printf("Retrieving metrics for resource %s", resourceID)
+	c.Logger.Printf("Retrieving metrics for resource %s", sanitizeLogInput(resourceID))
 	
 	resp, err := c.makeAuthenticatedRequest("GET", endpoint, nil)
 	if err != nil {
@@ -659,18 +668,33 @@ func (c *AriaClient) ExportReport(report map[string]interface{}, filename string
 	
 	// In a real implementation, you would write to file
 	// For this example, we'll just log the size
-	c.Logger.Printf("Report exported (%d bytes) - would write to %s", len(jsonData), filename)
+	c.Logger.Printf("Report exported (%d bytes) - would write to %s", len(jsonData), sanitizeLogInput(filename))
 	
 	return nil
 }
 
 // Example usage
 func main() {
+	// Get credentials from environment variables
+	hostname := os.Getenv("ARIA_HOSTNAME")
+	username := os.Getenv("ARIA_USERNAME")
+	password := os.Getenv("ARIA_PASSWORD")
+	
+	if hostname == "" {
+		hostname = "https://aria-ops.lab.local"
+	}
+	if username == "" {
+		username = "admin"
+	}
+	if password == "" {
+		log.Fatal("ARIA_PASSWORD environment variable must be set")
+	}
+	
 	// Initialize client
 	client := NewAriaClient(
-		"https://aria-ops.lab.local",
-		"admin",
-		"VMware123!",
+		hostname,
+		username,
+		password,
 		true, // Skip SSL verification for lab
 	)
 	

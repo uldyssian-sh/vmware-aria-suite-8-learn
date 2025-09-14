@@ -5,6 +5,7 @@
 
 const https = require('https');
 const fs = require('fs').promises;
+const path = require('path');
 
 class AriaOperationsClient {
     constructor(config) {
@@ -174,11 +175,28 @@ class AriaOperationsClient {
         }
     }
     
+    _safePath(userPath) {
+        // Sanitize filename and ensure it's in current directory
+        const safeName = path.basename(userPath).replace(/[^a-zA-Z0-9.-]/g, '_');
+        const safePath = path.join(process.cwd(), safeName);
+        
+        // Ensure the resolved path is within current directory
+        const resolvedPath = path.resolve(safePath);
+        const currentDir = path.resolve(process.cwd());
+        
+        if (!resolvedPath.startsWith(currentDir)) {
+            throw new Error('Invalid file path: must be within current directory');
+        }
+        
+        return resolvedPath;
+    }
+    
     async exportReport(report, filename) {
         try {
-            await fs.writeFile(filename, JSON.stringify(report, null, 2), 'utf8');
-            console.log(`✓ Report exported to: ${filename}`);
-            return filename;
+            const safePath = this._safePath(filename);
+            await fs.writeFile(safePath, JSON.stringify(report, null, 2), 'utf8');
+            console.log(`✓ Report exported to: ${safePath}`);
+            return safePath;
         } catch (error) {
             console.error('✗ Failed to export report:', error.message);
             throw error;
