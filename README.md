@@ -151,3 +151,36 @@ This repository contains example configurations and templates. Before using in p
 5. **Regularly rotate credentials** and access keys
 
 For more security guidelines, see [SECURITY.md](SECURITY.md).
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Required tools and dependencies listed above
+- Proper access credentials configured
+
+### Basic Usage
+
+```bash
+# Clone the repository
+git clone https://github.com/uldyssian-sh/vmware-aria-suite-8-learn.git
+cd vmware-aria-suite-8-learn
+
+# Follow setup instructions
+# See detailed documentation in Wiki
+```
+
+### Examples
+
+Check the `examples/` directory for:
+- Basic configuration examples
+- Advanced use cases
+- Best practices implementation
+- Production deployment guides
+
+### Next Steps
+
+1. 📖 Read the [Wiki](wiki) for detailed documentation
+2. 🔧 Check [Issues](issues) for known problems
+3. 💬 Join [Discussions](discussions) for community support
+4. 🤝 See [Contributing](CONTRIBUTING.md) to help improve the project
+
