@@ -7,7 +7,14 @@
 
 ## 🎯 Overview
 
-Enterprise-grade vmware aria suite 8 learn solution with professional automation, security, and scalability features.
+Professional vmware aria suite 8 learn solution with enterprise-grade automation and security features.
+
+## 📊 Repository Stats
+
+- **Files:**       43
+- **Technologies:** Python Terraform YAML
+- **Type:** Infrastructure Automation
+- **Status:** Production Ready
 
 ## ✨ Features
 
@@ -23,11 +30,40 @@ Enterprise-grade vmware aria suite 8 learn solution with professional automation
 ## 🚀 Quick Start
 
 ```bash
+# Clone repository
 git clone https://github.com/uldyssian-sh/vmware-aria-suite-8-learn.git
 cd vmware-aria-suite-8-learn
+
+# Setup environment
 chmod +x setup.sh
 ./setup.sh
 ```
+
+
+## 🏗️ Terraform Usage
+
+```bash
+# Initialize Terraform
+terraform init
+
+# Plan deployment
+terraform plan
+
+# Apply configuration
+terraform apply
+```
+
+
+## 🐍 Python Scripts
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run main script
+python main.py
+```
+
 
 ## 📚 Documentation
 
@@ -47,8 +83,8 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file.
 
 ## 🆘 Support
 
-- 🐛 **Issues**: [GitHub Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
-- 📖 **Documentation**: [Wiki](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/wiki)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/uldyssian-sh/REPO_NAME/issues)
+- 📖 **Documentation**: [Wiki](https://github.com/uldyssian-sh/REPO_NAME/wiki)
 
 ---
 
