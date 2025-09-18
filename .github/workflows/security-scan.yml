@@ -47,7 +47,7 @@ jobs:
 
     - name: Install Node.js dependencies
       run: |
-        if [ -f package.json ]; then npm ci; fi
+        if [ -f package.json ]; then npm install; fi
 
     - name: Python Security Scan - Safety
       run: |
@@ -82,12 +82,9 @@ jobs:
       with:
         name: security-reports
         path: |
-          safety-report.json
-          bandit-report.json
-          npm-audit.json
-          gosec-report.json
-          semgrep-report.json
+          *-report.json
         retention-days: 30
+        if-no-files-found: ignore
 
     - name: Security Summary
       run: |
