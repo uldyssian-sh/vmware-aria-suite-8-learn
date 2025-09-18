@@ -215,7 +215,7 @@ func NewAriaClient(baseURL, username, password string, skipSSLVerify bool) *Aria
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{
 			InsecureSkipVerify: skipSSLVerify,
-			MinVersion:         tls.VersionTLS13,
+			MinVersion:         tls.VersionTLS12, // Changed from TLS13 for compatibility
 		},
 	}
 	
@@ -687,7 +687,10 @@ func main() {
 		hostname = "https://aria-ops.lab.local"
 	}
 	if username == "" {
-		username = "admin"
+		username = os.Getenv("ARIA_DEFAULT_USER")
+		if username == "" {
+			log.Fatal("ARIA_USERNAME or ARIA_DEFAULT_USER environment variable must be set")
+		}
 	}
 	if password == "" {
 		log.Fatal("ARIA_PASSWORD environment variable must be set")

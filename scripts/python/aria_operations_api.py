@@ -27,20 +27,20 @@ class AriaOperationsAPI:
         logger.info("Authenticating...")
         # Use secure token generation in production
         self.auth_token = "mock-token"  # TODO: Replace with actual authentication
-        # Clear password from memory
-        password = None
         return True
         
     def authenticate(self):
         """Re-authenticate if token expired"""
         if not self.auth_token:
-            raise ValueError("Authentication required. Create new instance.")
+            logger.error("Authentication token missing. Please create new instance.")
+            return False
         return True
     
     def get_resources(self, resource_kind=None):
         """Retrieve resources"""
         if not self.auth_token:
-            self.authenticate()
+            if not self.authenticate():
+                return []
         
         logger.info("Getting resources...")
         return [{"id": "vm-001", "name": "test-vm"}]
@@ -48,7 +48,8 @@ class AriaOperationsAPI:
     def get_alerts(self):
         """Retrieve active alerts"""
         if not self.auth_token:
-            self.authenticate()
+            if not self.authenticate():
+                return []
         
         logger.info("Getting alerts...")
         return []
@@ -71,10 +72,19 @@ class AriaOperationsAPI:
     
     def export_report(self, report, filename):
         """Export report to JSON file"""
+        # Validate filename to prevent path traversal
+        import os.path
+        if os.path.isabs(filename) or '..' in filename:
+            logger.error("Invalid filename: absolute paths and '..' not allowed")
+            return False
+            
+        # Ensure filename is in current directory
+        safe_filename = os.path.basename(filename)
+        
         try:
-            with open(filename, 'w') as f:
+            with open(safe_filename, 'w') as f:
                 json.dump(report, f, indent=2)
-            logger.info(f"Report exported to: {filename}")
+            logger.info(f"Report exported to: {safe_filename}")
             return True
         except Exception as e:
             logger.error(f"Failed to export report: {e}")

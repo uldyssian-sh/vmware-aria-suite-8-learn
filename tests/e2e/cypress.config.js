@@ -32,9 +32,9 @@ module.exports = defineConfig({
     
     // Environment variables - use process.env for security
     env: {
-      aria_ops_username: process.env.CYPRESS_ARIA_OPS_USERNAME || 'admin',
+      aria_ops_username: process.env.CYPRESS_ARIA_OPS_USERNAME,
       aria_ops_password: process.env.CYPRESS_ARIA_OPS_PASSWORD,
-      aria_auto_username: process.env.CYPRESS_ARIA_AUTO_USERNAME || 'configadmin', 
+      aria_auto_username: process.env.CYPRESS_ARIA_AUTO_USERNAME, 
       aria_auto_password: process.env.CYPRESS_ARIA_AUTO_PASSWORD,
       test_timeout: 30000
     },
@@ -120,12 +120,15 @@ module.exports = defineConfig({
           return client.connect()
             .then(() => client.query(query))
             .then(result => {
-              client.end()
               return result.rows
             })
             .catch(error => {
-              client.end()
               throw error
+            })
+            .finally(() => {
+              if (client) {
+                client.end()
+              }
             })
         },
         
