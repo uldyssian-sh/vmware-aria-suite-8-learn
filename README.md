@@ -141,10 +141,10 @@ terraform apply
 ## 📖 Documentation
 
 ### 📚 **Core Documentation**
-- [📥 Installation Guide](docs/README.md#installation) - Complete setup instructions
-- [⚙️ Configuration Guide](docs/README.md#configuration) - Environment and security setup
-- [🔌 API Reference](docs/README.md#api-reference) - Complete API documentation
-- [🛠️ Troubleshooting](docs/README.md#troubleshooting) - Common issues and solutions
+- [📥 Installation Guide](#-quick-start) - Complete setup instructions
+- [⚙️ Configuration Guide](#️-configuration) - Environment and security setup
+- [🔌 API Reference](#-usage-examples) - Complete API documentation
+- [🛠️ Troubleshooting](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/wiki) - Common issues and solutions
 
 ### 💡 **Examples & Tutorials**
 - [🐍 Python Examples](examples/rest-api/) - REST API integration examples
@@ -158,9 +158,9 @@ terraform apply
 - [📈 Performance Tools](tests/performance/) - Load testing and benchmarking
 
 ### 🔒 **Security & Compliance**
-- [🛡️ Security Guidelines](SECURITY.md) - Security best practices
-- [📋 Compliance Standards](FREE-TIER-OPTIMIZATION.md) - GitHub Free tier compliance
-- [🔐 Credential Management](docs/README.md#security) - Secure credential handling
+- [🛡️ Security Guidelines](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/security) - Security best practices
+- [📋 Compliance Standards](AUDIT-REPORT.md) - GitHub Free tier compliance
+- [🔐 Credential Management](#️-configuration) - Secure credential handling
 
 ## ⚙️ Configuration
 
@@ -649,7 +649,7 @@ For enterprise support and consulting services:
 
 ### 🚀 **Ready to Get Started?**
 
-[📖 Read the Docs](docs/README.md) • [🔧 Quick Start](#-quick-start) • [💬 Join Discussion](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/discussions) • [🐛 Report Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
+[📖 Read the Docs](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/wiki) • [🔧 Quick Start](#-quick-start) • [💬 Join Discussion](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/discussions) • [🐛 Report Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
 
 **Made with ❤️ by the VMware Community**
 
