@@ -46,7 +46,7 @@ jobs:
 
     - name: Install Node.js dependencies
       run: |
-        if [ -f package.json ]; then npm ci; fi
+        if [ -f package.json ]; then npm install --no-package-lock; fi
 
     - name: Python Code Quality
       run: |
