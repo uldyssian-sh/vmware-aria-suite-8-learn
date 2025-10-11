@@ -663,3 +663,12 @@ For enterprise support and consulting services:
 <!-- Repository audit completed: $(date) -->
 <!-- Security scan: PASSED -->
 <!-- All checks: PASSED -->
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
+- **Security**: [Security Policy](SECURITY.md)
+- **Contributing**: [Contributing Guidelines](CONTRIBUTING.md)
+
+---
+
+**⭐ Star this repository if you find it helpful!**
