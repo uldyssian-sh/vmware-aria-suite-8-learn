@@ -651,7 +651,7 @@ For enterprise support and consulting services:
 
 [📖 Read the Docs](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/wiki) • [🔧 Quick Start](#-quick-start) • [💬 Join Discussion](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/discussions) • [🐛 Report Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
 
-**Made with ❤️ by the VMware Community**
+
 
 *Enterprise-grade • Security-first • GitHub Free Tier Optimized*
 
