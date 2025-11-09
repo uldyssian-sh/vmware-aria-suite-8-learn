@@ -6,8 +6,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
 [![GitHub stars](https://img.shields.io/github/stars/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/network)
-[![CI](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/workflows/success.yml/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
-[![Security Scan](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/workflows/success.yml/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
 [![Code Quality](https://img.shields.io/badge/code%20quality-A-green)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn)
 
 ## 📋 Overview
