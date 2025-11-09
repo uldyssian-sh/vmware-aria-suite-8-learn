@@ -152,7 +152,6 @@ type Blueprint struct {
 	ProjectId   string `json:"projectId"`
 	Status      string `json:"status"`
 	CreatedAt   string `json:"createdAt"`
-	UpdatedAt   string `json:"updatedAt"`
 }
 
 // BlueprintsResponse represents blueprints API response
@@ -172,7 +171,6 @@ type Deployment struct {
 	Status       string                 `json:"status"`
 	Inputs       map[string]interface{} `json:"inputs"`
 	CreatedAt    string                 `json:"createdAt"`
-	UpdatedAt    string                 `json:"updatedAt"`
 }
 
 // DeploymentsResponse represents deployments API response
