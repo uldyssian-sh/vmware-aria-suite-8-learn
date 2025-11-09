@@ -2,12 +2,9 @@ name: Success
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 jobs:
   success:
     runs-on: ubuntu-latest
     steps:
       - name: Success
         run: echo "Success!"
-# File updated 1762692716
