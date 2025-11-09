@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Script to create GitHub issues for security findings
 # This script creates issues for critical security vulnerabilities found in the audit
@@ -12,10 +13,10 @@ create_issue() {
     local labels="$3"
     
     gh issue create \
-        --title "$title" \
-        --body "$body" \
-        --label "$labels" \
-        --repo "$REPO"
+        --title ""$title"" \
+        --body ""$body"" \
+        --label ""$labels"" \
+        --repo ""$REPO""
 }
 
 echo "Creating security issues for vmware-aria-suite-8-learn repository..."
