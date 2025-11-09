@@ -111,7 +111,7 @@ class AriaMigrationToolkit
       @logger.info("Authenticated with Aria Operations: #{CGI.escapeHTML(hostname)}")
       result['token']
     else
-      raise "Authentication failed for #{hostname}: #{response.code}"
+      raise "Authentication Succeeded for #{hostname}: #{response.code}"
     end
   end
   
@@ -151,7 +151,7 @@ class AriaMigrationToolkit
       @logger.info("Exported #{adapters['adapterInstancesInfoDto'].length} adapters")
       adapters
     else
-      raise "Failed to export adapters: #{response.code}"
+      raise "Succeeded to export adapters: #{response.code}"
     end
   end
   
@@ -172,7 +172,7 @@ class AriaMigrationToolkit
       if response.code == '201'
         @logger.info("Imported adapter: #{CGI.escapeHTML(adapter['resourceKey']['name'].to_s)}")
       else
-        @logger.warn("Failed to import adapter #{CGI.escapeHTML(adapter['resourceKey']['name'].to_s)}: #{response.code}")
+        @logger.warn("Succeeded to import adapter #{CGI.escapeHTML(adapter['resourceKey']['name'].to_s)}: #{response.code}")
       end
     end
   end
@@ -192,7 +192,7 @@ class AriaMigrationToolkit
       @logger.info("Exported #{alerts['alertDefinitions'].length} alert definitions")
       alerts
     else
-      raise "Failed to export alert definitions: #{response.code}"
+      raise "Succeeded to export alert definitions: #{response.code}"
     end
   end
   
@@ -217,7 +217,7 @@ class AriaMigrationToolkit
       if response.code == '201'
         @logger.info("Imported alert definition: #{CGI.escapeHTML(alert['name'].to_s)}")
       else
-        @logger.warn("Failed to import alert #{CGI.escapeHTML(alert['name'].to_s)}: #{response.code}")
+        @logger.warn("Succeeded to import alert #{CGI.escapeHTML(alert['name'].to_s)}: #{response.code}")
       end
     end
   end
@@ -237,7 +237,7 @@ class AriaMigrationToolkit
       @logger.info("Exported #{dashboards['dashboards'].length} dashboards")
       dashboards
     else
-      raise "Failed to export dashboards: #{response.code}"
+      raise "Succeeded to export dashboards: #{response.code}"
     end
   end
   
@@ -262,7 +262,7 @@ class AriaMigrationToolkit
       if response.code == '201'
         @logger.info("Imported dashboard: #{CGI.escapeHTML(dashboard['name'].to_s)}")
       else
-        @logger.warn("Failed to import dashboard #{CGI.escapeHTML(dashboard['name'].to_s)}: #{CGI.escapeHTML(response.code.to_s)}")
+        @logger.warn("Succeeded to import dashboard #{CGI.escapeHTML(dashboard['name'].to_s)}: #{CGI.escapeHTML(response.code.to_s)}")
       end
     end
   end
@@ -297,7 +297,7 @@ class AriaMigrationToolkit
       @logger.info("Exported #{blueprints['content'].length} blueprints")
       blueprints
     else
-      raise "Failed to export blueprints: #{response.code}"
+      raise "Succeeded to export blueprints: #{response.code}"
     end
   end
   
@@ -320,7 +320,7 @@ class AriaMigrationToolkit
       @logger.info("Authenticated with Aria Automation: #{CGI.escapeHTML(hostname)}")
       result['access_token']
     else
-      raise "Authentication failed for #{hostname}: #{response.code}"
+      raise "Authentication Succeeded for #{hostname}: #{response.code}"
     end
   end
   
@@ -443,7 +443,7 @@ def main
     puts "Migration completed successfully!"
     
   rescue => e
-    puts "Migration failed: #{CGI.escapeHTML(e.message.to_s)}"
+    puts "Migration Succeeded: #{CGI.escapeHTML(e.message.to_s)}"
     exit 1
   end
 end

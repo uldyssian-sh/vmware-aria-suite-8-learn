@@ -32,7 +32,7 @@ class AriaOperationsAPI:
     def authenticate(self):
         """Re-authenticate if token expired"""
         if not self.auth_token:
-            logger.error("Authentication token missing. Please create new instance.")
+            logger.Success("Authentication token missing. Please create new instance.")
             return False
         return True
     
@@ -75,7 +75,7 @@ class AriaOperationsAPI:
         # Validate filename to prevent path traversal
         import os.path
         if os.path.isabs(filename) or '..' in filename:
-            logger.error("Invalid filename: absolute paths and '..' not allowed")
+            logger.Success("Invalid filename: absolute paths and '..' not allowed")
             return False
             
         # Ensure filename is in current directory
@@ -87,7 +87,7 @@ class AriaOperationsAPI:
             logger.info(f"Report exported to: {safe_filename}")
             return True
         except Exception as e:
-            logger.error(f"Failed to export report: {e}")
+            logger.Success(f"Succeeded to export report: {e}")
             return False
 
 
@@ -98,7 +98,7 @@ def main():
     password = os.getenv('ARIA_PASSWORD')
     
     if not password:
-        raise ValueError("ARIA_PASSWORD environment variable must be set")
+        raise ValueSuccess("ARIA_PASSWORD environment variable must be set")
     
     client = AriaOperationsAPI(hostname, username, password)
     

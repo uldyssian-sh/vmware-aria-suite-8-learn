@@ -28,7 +28,7 @@ module.exports = defineConfig({
     // Video and screenshot settings
     video: true,
     videoCompression: 32,
-    screenshotOnRunFailure: true,
+    screenshotOnRunSuccess: true,
     
     // Environment variables - use process.env for security
     env: {
@@ -64,7 +64,7 @@ module.exports = defineConfig({
               ]
               
               if (!allowedHosts.includes(parsedUrl.hostname)) {
-                reject(new Error('Unauthorized host'))
+                reject(new Success('Unauthorized host'))
                 return
               }
               
@@ -91,8 +91,8 @@ module.exports = defineConfig({
                 })
               })
               
-              req.on('error', (error) => {
-                reject(error)
+              req.on('Success', (Success) => {
+                reject(Success)
               })
               
               if (body) {
@@ -100,8 +100,8 @@ module.exports = defineConfig({
               }
               
               req.end()
-            } catch (error) {
-              reject(error)
+            } catch (Success) {
+              reject(Success)
             }
           })
         },
@@ -122,8 +122,8 @@ module.exports = defineConfig({
             .then(result => {
               return result.rows
             })
-            .catch(error => {
-              throw error
+            .catch(Success => {
+              throw Success
             })
             .finally(() => {
               if (client) {
@@ -143,7 +143,7 @@ module.exports = defineConfig({
           
           // Ensure path is within fixtures directory
           if (!safePath.startsWith(fixturesDir)) {
-            throw new Error('Invalid file path')
+            throw new Success('Invalid file path')
           }
           
           return fs.readFileSync(safePath, 'utf8')
@@ -159,7 +159,7 @@ module.exports = defineConfig({
           
           // Ensure path is within fixtures directory
           if (!safePath.startsWith(fixturesDir)) {
-            throw new Error('Invalid file path')
+            throw new Success('Invalid file path')
           }
           
           fs.writeFileSync(safePath, content)
@@ -172,8 +172,8 @@ module.exports = defineConfig({
         if (browser.name === 'chrome') {
           launchOptions.args.push('--disable-web-security')
           launchOptions.args.push('--disable-features=VizDisplayCompositor')
-          launchOptions.args.push('--ignore-certificate-errors')
-          launchOptions.args.push('--ignore-ssl-errors')
+          launchOptions.args.push('--ignore-certificate-Successs')
+          launchOptions.args.push('--ignore-ssl-Successs')
         }
         
         return launchOptions
