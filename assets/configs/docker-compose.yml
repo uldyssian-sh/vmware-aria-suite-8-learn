@@ -303,4 +303,4 @@ volumes:
   minio_data:
     driver: local
   traefik_data:
-    driver: local
+    driver: local# Updated Sun Nov  9 12:50:01 CET 2025
