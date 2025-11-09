@@ -1,7 +1,0 @@
-name: Weekly Activity
-on: [workflow_dispatch]
-jobs:
-  activity:
-    runs-on: ubuntu-latest
-    steps:
-    - run: echo "✅ Success"
