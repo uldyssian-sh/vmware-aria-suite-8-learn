@@ -1,8 +1,0 @@
-# GitHub Free AI Features
-ai:
-  enabled: true
-  github_free:
-    - copilot_suggestions
-    - dependabot_updates
-    - security_scanning
-    - code_analysis
