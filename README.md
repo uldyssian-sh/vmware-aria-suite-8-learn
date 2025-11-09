@@ -1,4 +1,10 @@
-# VMware Aria Suite 8 Learning Platform
+# vmware-aria-suite-8-learn
+
+[![AI-Powered](https://img.shields.io/badge/AI-Powered-blue?style=flat-square&logo=openai)](https://github.com/features/copilot)
+[![CodeQL](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/workflows/AI%20CodeQL%20Analysis/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
+[![AI Assistant](https://img.shields.io/badge/AI-Assistant-green?style=flat-square)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
+[![Dependabot](https://img.shields.io/badge/Dependabot-AI-orange?style=flat-square)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/network/dependencies)
+
 
 [![GitHub license](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)

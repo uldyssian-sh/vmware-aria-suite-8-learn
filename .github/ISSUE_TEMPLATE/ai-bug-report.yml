@@ -1,0 +1,18 @@
+name: 🤖 AI Bug Report
+description: AI-powered bug report template
+title: "[AI-BUG] "
+labels: ["bug", "ai-detected"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## AI-Powered Bug Report
+        This template uses AI to help identify and categorize bugs.
+  - type: input
+    id: ai-summary
+    attributes:
+      label: AI Summary
+      description: AI-generated bug summary
+      placeholder: AI will analyze and summarize the issue
+    validations:
+      required: true
