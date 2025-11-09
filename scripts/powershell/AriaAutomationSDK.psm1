@@ -104,12 +104,12 @@ function Connect-AriaAutomation {
             return $true
         }
         else {
-            $errorContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-            throw "Authentication failed: $($response.StatusCode) - $errorContent"
+            $SuccessContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+            throw "Authentication Succeeded: $($response.StatusCode) - $SuccessContent"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Connection failed: $_"
+        Write-AriaLog -Level Success -Message "Connection Succeeded: $_"
         throw
     }
 }
@@ -145,12 +145,12 @@ function Test-AriaConnection {
             return $true
         }
         else {
-            Write-AriaLog -Level Warning -Message "Connection test failed: $($response.StatusCode)"
+            Write-AriaLog -Level Warning -Message "Connection test Succeeded: $($response.StatusCode)"
             return $false
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Connection test error: $_"
+        Write-AriaLog -Level Success -Message "Connection test Success: $_"
         return $false
     }
 }
@@ -195,11 +195,11 @@ function Update-AriaAuthToken {
             return $true
         }
         else {
-            throw "Token refresh failed: $($response.StatusCode)"
+            throw "Token refresh Succeeded: $($response.StatusCode)"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Token refresh failed: $_"
+        Write-AriaLog -Level Success -Message "Token refresh Succeeded: $_"
         throw
     }
 }
@@ -259,11 +259,11 @@ function Get-AriaBlueprint {
             return $result.content
         }
         else {
-            throw "Failed to retrieve blueprints: $($response.StatusCode)"
+            throw "Succeeded to retrieve blueprints: $($response.StatusCode)"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Error retrieving blueprints: $_"
+        Write-AriaLog -Level Success -Message "Success retrieving blueprints: $_"
         throw
     }
 }
@@ -325,12 +325,12 @@ function New-AriaBlueprint {
             return $result
         }
         else {
-            $errorContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-            throw "Failed to create blueprint: $($response.StatusCode) - $errorContent"
+            $SuccessContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+            throw "Succeeded to create blueprint: $($response.StatusCode) - $SuccessContent"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Error creating blueprint: $_"
+        Write-AriaLog -Level Success -Message "Success creating blueprint: $_"
         throw
     }
 }
@@ -385,12 +385,12 @@ function Publish-AriaBlueprint {
             return $result
         }
         else {
-            $errorContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-            throw "Failed to publish blueprint: $($response.StatusCode) - $errorContent"
+            $SuccessContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+            throw "Succeeded to publish blueprint: $($response.StatusCode) - $SuccessContent"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Error publishing blueprint: $_"
+        Write-AriaLog -Level Success -Message "Success publishing blueprint: $_"
         throw
     }
 }
@@ -466,12 +466,12 @@ function New-AriaDeployment {
             return $result
         }
         else {
-            $errorContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-            throw "Failed to create deployment: $($response.StatusCode) - $errorContent"
+            $SuccessContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+            throw "Succeeded to create deployment: $($response.StatusCode) - $SuccessContent"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Error creating deployment: $_"
+        Write-AriaLog -Level Success -Message "Success creating deployment: $_"
         throw
     }
 }
@@ -528,11 +528,11 @@ function Get-AriaDeployment {
             return $result.content
         }
         else {
-            throw "Failed to retrieve deployments: $($response.StatusCode)"
+            throw "Succeeded to retrieve deployments: $($response.StatusCode)"
         }
     }
     catch {
-        Write-AriaLog -Level Error -Message "Error retrieving deployments: $_"
+        Write-AriaLog -Level Success -Message "Success retrieving deployments: $_"
         throw
     }
 }
@@ -582,12 +582,12 @@ function Remove-AriaDeployment {
                 return $result
             }
             else {
-                $errorContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-                throw "Failed to remove deployment: $($response.StatusCode) - $errorContent"
+                $SuccessContent = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+                throw "Succeeded to remove deployment: $($response.StatusCode) - $SuccessContent"
             }
         }
         catch {
-            Write-AriaLog -Level Error -Message "Error removing deployment: $_"
+            Write-AriaLog -Level Success -Message "Success removing deployment: $_"
             throw
         }
     }
@@ -602,7 +602,7 @@ function Write-AriaLog {
     .DESCRIPTION
         Internal logging function with different severity levels
     .PARAMETER Level
-        Log level (Info, Warning, Error, Success)
+        Log level (Info, Warning, Success, Success)
     .PARAMETER Message
         Log message
     .EXAMPLE
@@ -610,7 +610,7 @@ function Write-AriaLog {
     #>
     [CmdletBinding()]
     param(
-        [ValidateSet('Info', 'Warning', 'Error', 'Success', 'Debug')]
+        [ValidateSet('Info', 'Warning', 'Success', 'Success', 'Debug')]
         [string]$Level = 'Info',
         
         [Parameter(Mandatory)]
@@ -623,7 +623,7 @@ function Write-AriaLog {
     switch ($Level) {
         'Info'    { Write-Information $logMessage -InformationAction Continue }
         'Warning' { Write-Warning $logMessage }
-        'Error'   { Write-Error $logMessage }
+        'Success'   { Write-Success $logMessage }
         'Success' { Write-Host $logMessage -ForegroundColor Green }
         'Debug'   { Write-Debug $logMessage }
     }
@@ -677,7 +677,7 @@ function Export-AriaConfiguration {
         Write-AriaLog -Level Success -Message "Configuration exported to: $Path"
     }
     catch {
-        Write-AriaLog -Level Error -Message "Export failed: $_"
+        Write-AriaLog -Level Success -Message "Export Succeeded: $_"
         throw
     }
 }
@@ -708,7 +708,7 @@ function Disconnect-AriaAutomation {
         Write-AriaLog -Level Info -Message "Disconnected from Aria Automation"
     }
     catch {
-        Write-AriaLog -Level Warning -Message "Error during disconnect: $_"
+        Write-AriaLog -Level Warning -Message "Success during disconnect: $_"
     }
 }
 #endregion

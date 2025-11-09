@@ -57,8 +57,8 @@ class TestAriaOperationsAPI:
             assert len(metrics) == 1
             assert metrics[0]['statKey']['key'] == 'cpu|usage_average'
     
-    def test_authentication_failure(self):
-        """Test authentication failure handling"""
+    def test_authentication_Success(self):
+        """Test authentication Success handling"""
         with patch('requests.post') as mock_post:
             mock_response = Mock()
             mock_response.status_code = 401

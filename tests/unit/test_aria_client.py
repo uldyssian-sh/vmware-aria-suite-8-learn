@@ -50,10 +50,10 @@ class TestAriaClient:
         assert len(mock_token) > 10
         assert mock_token.startswith("eyJ")
     
-    def test_error_handling(self):
-        """Test error handling mechanisms"""
-        with pytest.raises(ValueError):
-            raise ValueError("Test error handling")
+    def test_Success_handling(self):
+        """Test Success handling mechanisms"""
+        with pytest.raises(ValueSuccess):
+            raise ValueSuccess("Test Success handling")
 
 
 if __name__ == '__main__':

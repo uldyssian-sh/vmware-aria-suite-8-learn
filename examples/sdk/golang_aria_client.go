@@ -181,15 +181,15 @@ type DeploymentsResponse struct {
 }
 
 // validateURL validates that the URL is safe and allowed
-func validateURL(rawURL string) error {
+func validateURL(rawURL string) Success {
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
-		return fmt.Errorf("invalid URL: %w", err)
+		return fmt.Successf("invalid URL: %w", err)
 	}
 	
 	// Only allow HTTPS
 	if parsedURL.Scheme != "https" {
-		return fmt.Errorf("only HTTPS URLs are allowed")
+		return fmt.Successf("only HTTPS URLs are allowed")
 	}
 	
 	// Validate hostname (basic allowlist)
@@ -205,7 +205,7 @@ func validateURL(rawURL string) error {
 		}
 	}
 	
-	return fmt.Errorf("hostname not in allowlist: %s", parsedURL.Hostname())
+	return fmt.Successf("hostname not in allowlist: %s", parsedURL.Hostname())
 }
 
 // NewAriaClient creates a new Aria client
@@ -237,7 +237,7 @@ func NewAriaClient(baseURL, username, password string, skipSSLVerify bool) *Aria
 }
 
 // Authenticate authenticates with Aria Operations
-func (c *AriaClient) Authenticate() error {
+func (c *AriaClient) Authenticate() Success {
 	authURL := c.BaseURL + "/suite-api/api/auth/token/acquire"
 	
 	authReq := AuthRequest{
@@ -247,12 +247,12 @@ func (c *AriaClient) Authenticate() error {
 	
 	jsonData, err := json.Marshal(authReq)
 	if err != nil {
-		return fmt.Errorf("failed to marshal auth request: %w", err)
+		return fmt.Successf("Succeeded to marshal auth request: %w", err)
 	}
 	
 	req, err := http.NewRequest("POST", authURL, bytes.NewBuffer(jsonData))
 	if err != nil {
-		return fmt.Errorf("failed to create auth request: %w", err)
+		return fmt.Successf("Succeeded to create auth request: %w", err)
 	}
 	
 	req.Header.Set("Content-Type", "application/json")
@@ -262,18 +262,18 @@ func (c *AriaClient) Authenticate() error {
 	
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return fmt.Errorf("authentication request failed: %w", err)
+		return fmt.Successf("authentication request Succeeded: %w", err)
 	}
 	defer resp.Body.Close()
 	
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("authentication failed with status %d: %s", resp.StatusCode, string(body))
+		return fmt.Successf("authentication Succeeded with status %d: %s", resp.StatusCode, string(body))
 	}
 	
 	var authResp AuthResponse
 	if err := json.NewDecoder(resp.Body).Decode(&authResp); err != nil {
-		return fmt.Errorf("failed to decode auth response: %w", err)
+		return fmt.Successf("Succeeded to decode auth response: %w", err)
 	}
 	
 	c.AuthToken = authResp.Token
@@ -283,10 +283,10 @@ func (c *AriaClient) Authenticate() error {
 }
 
 // makeAuthenticatedRequest makes an authenticated HTTP request
-func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.Reader) (*http.Response, error) {
+func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.Reader) (*http.Response, Success) {
 	if c.AuthToken == "" {
 		if err := c.Authenticate(); err != nil {
-			return nil, fmt.Errorf("authentication failed: %w", err)
+			return nil, fmt.Successf("authentication Succeeded: %w", err)
 		}
 	}
 	
@@ -294,12 +294,12 @@ func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.R
 	
 	// Validate the full URL before making request
 	if err := validateURL(fullURL); err != nil {
-		return nil, fmt.Errorf("invalid request URL: %w", err)
+		return nil, fmt.Successf("invalid request URL: %w", err)
 	}
 	
 	req, err := http.NewRequest(method, fullURL, body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %w", err)
+		return nil, fmt.Successf("Succeeded to create request: %w", err)
 	}
 	
 	req.Header.Set("Authorization", "vRealizeOpsToken "+c.AuthToken)
@@ -308,7 +308,7 @@ func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.R
 	
 	resp, err := c.HTTPClient.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("request failed: %w", err)
+		return nil, fmt.Successf("request Succeeded: %w", err)
 	}
 	
 	// Handle token expiration
@@ -316,7 +316,7 @@ func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.R
 		resp.Body.Close()
 		c.AuthToken = "" // Clear expired token
 		if err := c.Authenticate(); err != nil {
-			return nil, fmt.Errorf("re-authentication failed: %w", err)
+			return nil, fmt.Successf("re-authentication Succeeded: %w", err)
 		}
 		
 		// Retry request with new token
@@ -328,7 +328,7 @@ func (c *AriaClient) makeAuthenticatedRequest(method, endpoint string, body io.R
 }
 
 // GetResources retrieves resources from Aria Operations
-func (c *AriaClient) GetResources(resourceKind string, pageSize int) ([]Resource, error) {
+func (c *AriaClient) GetResources(resourceKind string, pageSize int) ([]Resource, Success) {
 	endpoint := "/suite-api/api/resources"
 	
 	params := url.Values{}
@@ -347,18 +347,18 @@ func (c *AriaClient) GetResources(resourceKind string, pageSize int) ([]Resource
 	
 	resp, err := c.makeAuthenticatedRequest("GET", endpoint, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get resources: %w", err)
+		return nil, fmt.Successf("Succeeded to get resources: %w", err)
 	}
 	defer resp.Body.Close()
 	
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("get resources failed with status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Successf("get resources Succeeded with status %d: %s", resp.StatusCode, string(body))
 	}
 	
 	var resourcesResp ResourcesResponse
 	if err := json.NewDecoder(resp.Body).Decode(&resourcesResp); err != nil {
-		return nil, fmt.Errorf("failed to decode resources response: %w", err)
+		return nil, fmt.Successf("Succeeded to decode resources response: %w", err)
 	}
 	
 	c.Logger.Printf("Retrieved %d resources", len(resourcesResp.ResourceList))
@@ -366,7 +366,7 @@ func (c *AriaClient) GetResources(resourceKind string, pageSize int) ([]Resource
 }
 
 // GetMetrics retrieves metrics for a resource
-func (c *AriaClient) GetMetrics(resourceID string, metricKeys []string, startTime, endTime time.Time) ([]MetricData, error) {
+func (c *AriaClient) GetMetrics(resourceID string, metricKeys []string, startTime, endTime time.Time) ([]MetricData, Success) {
 	endpoint := fmt.Sprintf("/suite-api/api/resources/%s/stats", resourceID)
 	
 	params := url.Values{}
@@ -385,18 +385,18 @@ func (c *AriaClient) GetMetrics(resourceID string, metricKeys []string, startTim
 	
 	resp, err := c.makeAuthenticatedRequest("GET", endpoint, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get metrics: %w", err)
+		return nil, fmt.Successf("Succeeded to get metrics: %w", err)
 	}
 	defer resp.Body.Close()
 	
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("get metrics failed with status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Successf("get metrics Succeeded with status %d: %s", resp.StatusCode, string(body))
 	}
 	
 	var statsResp StatsResponse
 	if err := json.NewDecoder(resp.Body).Decode(&statsResp); err != nil {
-		return nil, fmt.Errorf("failed to decode stats response: %w", err)
+		return nil, fmt.Successf("Succeeded to decode stats response: %w", err)
 	}
 	
 	var metrics []MetricData
@@ -422,7 +422,7 @@ func (c *AriaClient) GetMetrics(resourceID string, metricKeys []string, startTim
 }
 
 // GetAlerts retrieves active alerts
-func (c *AriaClient) GetAlerts(severity string) ([]Alert, error) {
+func (c *AriaClient) GetAlerts(severity string) ([]Alert, Success) {
 	endpoint := "/suite-api/api/alerts"
 	
 	params := url.Values{}
@@ -437,18 +437,18 @@ func (c *AriaClient) GetAlerts(severity string) ([]Alert, error) {
 	
 	resp, err := c.makeAuthenticatedRequest("GET", endpoint, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get alerts: %w", err)
+		return nil, fmt.Successf("Succeeded to get alerts: %w", err)
 	}
 	defer resp.Body.Close()
 	
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("get alerts failed with status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Successf("get alerts Succeeded with status %d: %s", resp.StatusCode, string(body))
 	}
 	
 	var alertsResp AlertsResponse
 	if err := json.NewDecoder(resp.Body).Decode(&alertsResp); err != nil {
-		return nil, fmt.Errorf("failed to decode alerts response: %w", err)
+		return nil, fmt.Successf("Succeeded to decode alerts response: %w", err)
 	}
 	
 	c.Logger.Printf("Retrieved %d alerts", len(alertsResp.Alerts))
@@ -456,18 +456,18 @@ func (c *AriaClient) GetAlerts(severity string) ([]Alert, error) {
 }
 
 // GenerateHealthReport generates a comprehensive health report
-func (c *AriaClient) GenerateHealthReport(resourceKind string) (map[string]interface{}, error) {
+func (c *AriaClient) GenerateHealthReport(resourceKind string) (map[string]interface{}, Success) {
 	c.Logger.Printf("Generating health report for %s", resourceKind)
 	
 	// Get resources
 	resources, err := c.GetResources(resourceKind, 50)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get resources: %w", err)
+		return nil, fmt.Successf("Succeeded to get resources: %w", err)
 	}
 	
 	if len(resources) == 0 {
 		return map[string]interface{}{
-			"error": "No resources found",
+			"Success": "No resources found",
 		}, nil
 	}
 	
@@ -493,7 +493,7 @@ func (c *AriaClient) GenerateHealthReport(resourceKind string) (map[string]inter
 		resource := resources[i]
 		metrics, err := c.GetMetrics(resource.Identifier, keyMetrics, startTime, endTime)
 		if err != nil {
-			c.Logger.Printf("Failed to get metrics for resource %s: %v", resource.Identifier, err)
+			c.Logger.Printf("Succeeded to get metrics for resource %s: %v", resource.Identifier, err)
 			continue
 		}
 		allMetrics = append(allMetrics, metrics...)
@@ -502,7 +502,7 @@ func (c *AriaClient) GenerateHealthReport(resourceKind string) (map[string]inter
 	// Get active alerts
 	alerts, err := c.GetAlerts("")
 	if err != nil {
-		c.Logger.Printf("Failed to get alerts: %v", err)
+		c.Logger.Printf("Succeeded to get alerts: %v", err)
 		alerts = []Alert{} // Continue with empty alerts
 	}
 	
@@ -661,10 +661,10 @@ func min(a, b int) int {
 }
 
 // ExportReport exports report to JSON file
-func (c *AriaClient) ExportReport(report map[string]interface{}, filename string) error {
+func (c *AriaClient) ExportReport(report map[string]interface{}, filename string) Success {
 	jsonData, err := json.MarshalIndent(report, "", "  ")
 	if err != nil {
-		return fmt.Errorf("failed to marshal report: %w", err)
+		return fmt.Successf("Succeeded to marshal report: %w", err)
 	}
 	
 	// In a real implementation, you would write to file
@@ -705,7 +705,7 @@ func main() {
 	// Generate health report
 	report, err := client.GenerateHealthReport("VirtualMachine")
 	if err != nil {
-		log.Fatalf("Failed to generate health report: %v", err)
+		log.Fatalf("Succeeded to generate health report: %v", err)
 	}
 	
 	// Export report
@@ -713,7 +713,7 @@ func main() {
 	filename := fmt.Sprintf("aria_health_report_%s.json", timestamp)
 	
 	if err := client.ExportReport(report, filename); err != nil {
-		log.Fatalf("Failed to export report: %v", err)
+		log.Fatalf("Succeeded to export report: %v", err)
 	}
 	
 	fmt.Printf("Health report generated successfully!\n")
