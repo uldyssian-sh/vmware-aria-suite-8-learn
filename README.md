@@ -2,7 +2,6 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/stargazers)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn)
 
 
