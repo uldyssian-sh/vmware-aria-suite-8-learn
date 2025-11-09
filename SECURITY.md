@@ -11,7 +11,3 @@ Please report security vulnerabilities by creating an issue or contacting the ma
 ## Dependency Management
 
 This project uses automated dependency scanning with Trivy. Known false positives and low-risk vulnerabilities are documented in `.trivyignore`.
-# Updated Sun Nov  9 12:50:01 CET 2025
-# Updated Sun Nov  9 12:52:21 CET 2025
-# Updated Sun Nov  9 12:56:35 CET 2025
-# File updated 1762692717

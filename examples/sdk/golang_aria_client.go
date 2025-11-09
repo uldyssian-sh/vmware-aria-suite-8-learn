@@ -152,7 +152,6 @@ type Blueprint struct {
 	ProjectId   string `json:"projectId"`
 	Status      string `json:"status"`
 	CreatedAt   string `json:"createdAt"`
-	UpdatedAt   string `json:"updatedAt"`
 }
 
 // BlueprintsResponse represents blueprints API response
@@ -172,7 +171,6 @@ type Deployment struct {
 	Status       string                 `json:"status"`
 	Inputs       map[string]interface{} `json:"inputs"`
 	CreatedAt    string                 `json:"createdAt"`
-	UpdatedAt    string                 `json:"updatedAt"`
 }
 
 // DeploymentsResponse represents deployments API response
@@ -722,7 +720,3 @@ func main() {
 	fmt.Printf("Total Resources: %v\n", report["totalResources"])
 	fmt.Printf("Active Alerts: %v\n", report["activeAlerts"])
 	fmt.Printf("Recommendations: %v\n", len(report["recommendations"].([]string)))
-}# Updated Sun Nov  9 12:50:01 CET 2025
-# Updated Sun Nov  9 12:52:21 CET 2025
-# Updated Sun Nov  9 12:56:35 CET 2025
-# File updated 1762692715
