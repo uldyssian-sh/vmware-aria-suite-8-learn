@@ -626,7 +626,6 @@ For enterprise support and consulting services:
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.8+-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Ruby](https://img.shields.io/badge/Ruby-3.0+-CC342D?style=flat-square&logo=ruby&logoColor=white)
-![PowerShell](https://img.shields.io/badge/PowerShell-7.0+-5391FE?style=flat-square&logo=powershell&logoColor=white)
 
 ### 🏗️ **Infrastructure & Tools**
 
@@ -634,7 +633,6 @@ For enterprise support and consulting services:
 ![Docker](https://img.shields.io/badge/Docker-20+-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-1.24+-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI/CD-2088FF?style=flat-square&logo=github-actions&logoColor=white)
-![VMware](https://img.shields.io/badge/VMware-Aria%20Suite%208-607078?style=flat-square&logo=vmware&logoColor=white)
 
 ### 🔒 **Security & Quality**
 
