@@ -469,4 +469,4 @@ output "deployment_summary" {
       aria_automation = "https://${var.aria_automation_config.ip_address}"
     }
   }
-}
+}# Updated Sun Nov  9 12:52:21 CET 2025
