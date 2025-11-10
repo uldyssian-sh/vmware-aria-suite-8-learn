@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/uldyssian-sh/vmware-aria-suite-8-learn#readme",
   "devDependencies": {
-    "prettier": "^2.8.0",
+    "prettier": "^3.6.2",
     "eslint": "^8.0.0"
   }
 }
