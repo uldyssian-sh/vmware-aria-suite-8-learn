@@ -21,6 +21,6 @@
   "homepage": "https://github.com/uldyssian-sh/vmware-aria-suite-8-learn#readme",
   "devDependencies": {
     "prettier": "^2.8.0",
-    "eslint": "^8.0.0"
+    "eslint": "^9.39.1"
   }
 }
