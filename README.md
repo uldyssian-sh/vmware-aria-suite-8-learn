@@ -1,24 +1,5 @@
 # VMware Aria Suite 8 Learning Platform
 
-[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
-[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
-[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
-[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
-
-[![GitHub license](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
-[![GitHub stars](https://img.shields.io/github/stars/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/network)
-[![CI](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/workflows/CI/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
-[![Security Scan](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/workflows/Security%20Scan/badge.svg)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/actions)
-[![Code Quality](https://img.shields.io/badge/code%20quality-A-green)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn)
-
 ## 📋 Overview
 
 A comprehensive learning platform and toolkit for VMware Aria Suite 8, providing enterprise-grade infrastructure management, automation, and monitoring solutions. This repository contains practical examples, SDKs, and tools for working with VMware Aria Operations, Aria Automation, and related technologies.
@@ -80,18 +61,6 @@ A comprehensive learning platform and toolkit for VMware Aria Suite 8, providing
 
 ```bash
 # Clone the repository
-
-[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
-[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
-
-[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
-[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
-[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
-[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
 git clone https://github.com/uldyssian-sh/vmware-aria-suite-8-learn.git
 cd vmware-aria-suite-8-learn
 
@@ -634,17 +603,9 @@ For enterprise support and consulting services:
 ## 📈 Project Statistics
 
 ### 📊 **Repository Metrics**
-
-
 ### 🔧 **Technology Stack**
-
-
 ### 🏗️ **Infrastructure & Tools**
-
-
 ### 🔒 **Security & Quality**
-
-
 ---
 
 <div align="center">
@@ -652,8 +613,6 @@ For enterprise support and consulting services:
 ### 🚀 **Ready to Get Started?**
 
 [📖 Read the Docs](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/wiki) • [🔧 Quick Start](#-quick-start) • [💬 Join Discussion](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/discussions) • [🐛 Report Issues](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
-
-
 
 *Enterprise-grade • Security-first • GitHub Free Tier Optimized*
 
