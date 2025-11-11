@@ -6,6 +6,12 @@
 [![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
 [![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
 
+[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
+[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
+
 [![GitHub license](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
 [![GitHub stars](https://img.shields.io/github/stars/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/stargazers)
@@ -624,34 +630,15 @@ For enterprise support and consulting services:
 
 ### 📊 **Repository Metrics**
 
-![GitHub repo size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
-![GitHub code size](https://img.shields.io/github/languages/code-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
-![GitHub contributors](https://img.shields.io/github/contributors/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
-![GitHub release](https://img.shields.io/github/v/release/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)
 
 ### 🔧 **Technology Stack**
 
-![Go](https://img.shields.io/badge/Go-1.19+-00ADD8?style=flat-square&logo=go&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-4.8+-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Ruby](https://img.shields.io/badge/Ruby-3.0+-CC342D?style=flat-square&logo=ruby&logoColor=white)
 
 ### 🏗️ **Infrastructure & Tools**
 
-![Terraform](https://img.shields.io/badge/Terraform-1.0+-623CE4?style=flat-square&logo=terraform&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-20+-2496ED?style=flat-square&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-1.24+-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI/CD-2088FF?style=flat-square&logo=github-actions&logoColor=white)
 
 ### 🔒 **Security & Quality**
 
-![Security Scan](https://img.shields.io/badge/Security%20Scan-Passing-success?style=flat-square&logo=security&logoColor=white)
-![Code Quality](https://img.shields.io/badge/Code%20Quality-A-success?style=flat-square&logo=codeclimate&logoColor=white)
-![Test Coverage](https://img.shields.io/badge/Coverage-85%25-success?style=flat-square&logo=codecov&logoColor=white)
-![Vulnerabilities](https://img.shields.io/badge/Vulnerabilities-0-success?style=flat-square&logo=snyk&logoColor=white)
 
 ---
 
