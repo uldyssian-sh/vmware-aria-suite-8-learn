@@ -12,6 +12,12 @@
 [![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
 [![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
 
+[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
+[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
+
 [![GitHub license](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/blob/main/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/issues)
 [![GitHub stars](https://img.shields.io/github/stars/uldyssian-sh/vmware-aria-suite-8-learn)](https://github.com/uldyssian-sh/vmware-aria-suite-8-learn/stargazers)
@@ -81,6 +87,12 @@ A comprehensive learning platform and toolkit for VMware Aria Suite 8, providing
 
 ```bash
 # Clone the repository
+
+[![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
+[![Languages](https://img.shields.io/github/languages/count/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Size](https://img.shields.io/github/repo-size/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](#)
+[![Security Scan](https://img.shields.io/badge/security-scanned-green?style=flat-square)](#)
 
 [![License](https://img.shields.io/github/license/uldyssian-sh/vmware-aria-suite-8-learn?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat-square)](#)
