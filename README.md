@@ -632,10 +632,9 @@ For enterprise support and consulting services:
 
 ---
 
-**⭐ Star this repository if you find it helpful!**
-
 ## Learning Resources
 - Comprehensive Aria Suite 8 tutorials
 - Hands-on lab exercises
 - Best practices documentation
+
 ⭐ Star this repository if you find it helpful!
