@@ -639,4 +639,8 @@ For enterprise support and consulting services:
 
 ---
 
-Maintained by: uldyssian-sh⭐ Star this repository if you find it helpful!Disclaimer: Use of this code is at your own risk. Author bears no responsibility for any damages caused by the code.
+Maintained by: uldyssian-sh
+
+⭐ Star this repository if you find it helpful!
+
+Disclaimer: Use of this code is at your own risk. Author bears no responsibility for any damages caused by the code.
